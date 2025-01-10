@@ -1,36 +1,119 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Is My Card Leaked?
 
-## Getting Started
+## About The Project
+*Is My Card Leaked?* - A Next.js application that simulates checking credit card information against a "hacker database". This project demonstrates modern web development practices using Next.js, Prisma, MongoDB, and Tailwind CSS, with features like internationalization and animated UI components.
 
-First, run the development server:
+**Note: This is a demonstration project. Do not enter real credit card information.**
 
+## Features
+- Interactive credit card form with real-time validation
+- Animated 3D credit card display
+- Multi-language support (English and Thai)
+- MongoDB integration via Prisma
+- Responsive design with Tailwind CSS
+- Modern UI components using shadcn/ui
+- Loading animations and counter effects
+
+## Requirements
+- Node.js 18.17 or later
+- MongoDB database
+
+## Installation
+
+1. Clone the repository
+```bash
+git clone https://github.com/TitorPs360/is-my-card-leaked
+cd is-my-card-leaked
+```
+
+2. Install dependencies
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Set up environment variables
+Create a `.env` file in the root directory with the following content:
+```env
+DATABASE_URL="your_mongodb_connection_string"
+```
+
+4. Set up the database
+```bash
+npx prisma generate
+npx prisma db push
+```
+
+## Usage
+
+### Development Server
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
-
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Production Build
+```bash
+npm run build
+npm start
+# or
+yarn build
+yarn start
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Database Schema
+The project uses Prisma with MongoDB. Here's the main schema:
 
-## Learn More
+```prisma
+model CardData {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  cardNumber String
+  expDate    String
+  cvv        String
+  cardHolder String
+  createdAt  DateTime @default(now())
 
-To learn more about Next.js, take a look at the following resources:
+  @@map("card_data")
+}
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project Structure
+```
+├── prisma/
+│   └── schema.prisma       # Database schema
+├── public/                 # Static assets
+├── src/
+│   ├── app/                # Next.js app directory
+│   │   ├── api/            # API routes
+│   │   ├── components/     # App-specific components
+│   │   └── page.tsx        # Main page
+│   ├── components/         # Reusable components
+│   │   └── ui/             # UI components
+│   ├── i18n/               # Internationalization
+│   └── lib/                # Utility functions
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deployment
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new). You will need to configure the following:
 
-## Deploy on Vercel
+1. Connect your GitHub repository
+2. Add your environment variables
+3. Deploy the application
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+For detailed deployment instructions, check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Important Notes
+1. This is a demonstration project. Do not use real credit card information.
+2. The project includes Thai language support with a warning message in the footer.
+3. All credit card data is stored in MongoDB using Prisma as the ORM.
+4. The project uses shadcn/ui components for consistent UI design.
+
+## Development Tools
+- TypeScript for type safety
+- ESLint for code linting
+- Tailwind CSS for styling
+- Prisma for database management
+- i18next for **internationalization**
