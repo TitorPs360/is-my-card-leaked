@@ -8,7 +8,7 @@ import { Card } from '@/components/ui/card';
 import { useTranslation } from 'react-i18next';
 import dynamic from 'next/dynamic';
 
-import '../i18n'; // Import the i18n configuration
+import '../i18n';
 
 interface FormData {
   cardNumber: string;
@@ -17,12 +17,19 @@ interface FormData {
   cardHolder: string;
 }
 
+interface ApiResponse {
+  message: string;
+  totalPreviousRecords: number;
+}
+
 const CreditCardForm: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [mounted, setMounted] = useState(false);
   const [isFlipped, setIsFlipped] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [displayCount, setDisplayCount] = useState<number>(0);
+  const [totalRecords, setTotalRecords] = useState<number>(0);
   const [formData, setFormData] = useState<FormData>({
     cardNumber: '',
     expDate: '',
@@ -33,6 +40,29 @@ const CreditCardForm: React.FC = () => {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  // Animation effect for the counter
+  useEffect(() => {
+    if (isLoading && totalRecords > 0) {
+      const duration = 8000; // 8 seconds for the count animation
+      const steps = totalRecords;
+      const increment = Math.max(1, Math.floor(totalRecords / 100)); // Increment by at least 1
+      const interval = Math.floor(duration / (steps / increment));
+
+      const timer = setInterval(() => {
+        setDisplayCount((prev) => {
+          const next = prev + increment;
+          if (next >= totalRecords) {
+            clearInterval(timer);
+            return totalRecords;
+          }
+          return next;
+        });
+      }, interval);
+
+      return () => clearInterval(timer);
+    }
+  }, [isLoading, totalRecords]);
 
   if (!mounted) {
     return null;
@@ -80,11 +110,37 @@ const CreditCardForm: React.FC = () => {
   const handleSubmit = async () => {
     if (isFormComplete()) {
       setIsLoading(true);
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      setIsSubmitted(true);
-      setTimeout(() => {
+      setDisplayCount(0);
+
+      try {
+        const response = await fetch('/api/checkCard', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const data: ApiResponse = await response.json();
+
+        if (response.ok) {
+          setTotalRecords(data.totalPreviousRecords);
+
+          // Wait for the loading animation (10 seconds total)
+          await new Promise((resolve) => setTimeout(resolve, 10000));
+
+          setIsSubmitted(true);
+          setTimeout(() => {
+            setIsLoading(false);
+          }, 500);
+        } else {
+          throw new Error(data.message || 'Something went wrong');
+        }
+      } catch (error) {
+        console.error('Error submitting card:', error);
+        // Handle error appropriately
         setIsLoading(false);
-      }, 500);
+      }
     }
   };
 
@@ -110,6 +166,12 @@ const CreditCardForm: React.FC = () => {
                 </div>
               </div>
               <p className="text-2xl font-medium">{t('scanning')}</p>
+              {totalRecords > 0 && (
+                <div className="mt-4">
+                  <p className="text-lg">{t('recordsProcessed')}</p>
+                  <p className="text-4xl font-bold mt-2">{displayCount.toLocaleString()}</p>
+                </div>
+              )}
             </div>
           ) : (
             <div className="space-y-6 animate-fade-in">
@@ -125,6 +187,8 @@ const CreditCardForm: React.FC = () => {
                     cardHolder: '',
                   });
                   setIsFlipped(false);
+                  setDisplayCount(0);
+                  setTotalRecords(0);
                 }}
                 className="mt-6 bg-white text-purple-600 hover:bg-gray-100"
               >
