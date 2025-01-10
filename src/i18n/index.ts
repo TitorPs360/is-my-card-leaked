@@ -17,7 +17,14 @@ const resources = {
       back: "Back",
       submit: "Submit",
       scanning: "Scanning database...",
-      success: "Your card number did not show up in any hacker database",
+      recordsProcessed: "Records Processed",
+      processingSteps: {
+        connecting: "Connecting to secure database...",
+        scanning: "Scanning records...",
+        analyzing: "Analyzing matches...",
+        finalizing: "Finalizing results..."
+      },
+      success: "Your card number did not show up in any hacker database yet",
       makeAnother: "Check Another Card",
       creditCard: "Credit Card",
       validThru: "Valid Thru",
@@ -37,7 +44,14 @@ const resources = {
       back: "ย้อนกลับ",
       submit: "ตรวจสอบ",
       scanning: "กำลังสแกนฐานข้อมูล...",
-      success: "ไม่พบหมายเลขบัตรของคุณในฐานข้อมูลแฮกเกอร์",
+      recordsProcessed: "จำนวนรายการที่ตรวจสอบแล้ว",
+      processingSteps: {
+        connecting: "กำลังเชื่อมต่อกับฐานข้อมูลที่ปลอดภัย...",
+        scanning: "กำลังสแกนข้อมูล...",
+        analyzing: "กำลังวิเคราะห์ข้อมูลที่ตรงกัน...",
+        finalizing: "กำลังสรุปผล..."
+      },
+      success: "ยังไม่พบหมายเลขบัตรของคุณในฐานข้อมูลแฮกเกอร์",
       makeAnother: "ตรวจสอบบัตรอื่น",
       creditCard: "บัตรเครดิต",
       validThru: "ใช้ได้ถึง",
