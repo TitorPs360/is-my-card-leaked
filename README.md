@@ -1,9 +1,16 @@
 # Is My Card Leaked?
 
+![GitHub Page Views](https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgithub.com%2FTitorPs360%2Fis-my-card-leaked&count_bg=%2379C83D&title_bg=%23555555&icon=&icon_color=%23E7E7E7&title=views&edge_flat=false)
+[![Demo Site](https://img.shields.io/badge/demo-website-blue)](https://is-my-card-leaked.vercel.app/)
+
+
 ## About The Project
 *Is My Card Leaked?* - A Next.js application that simulates checking credit card information against a "hacker database". This project demonstrates modern web development practices using Next.js, Prisma, MongoDB, and Tailwind CSS, with features like internationalization and animated UI components.
 
 **Note: This is a demonstration project. Do not enter real credit card information.**
+
+## Live Demo
+Check out the live demo: [Is My Card Leaked?](https://is-my-card-leaked.vercel.app/)
 
 ## Features
 - Interactive credit card form with real-time validation
@@ -13,6 +20,31 @@
 - Responsive design with Tailwind CSS
 - Modern UI components using shadcn/ui
 - Loading animations and counter effects
+
+## Screenshots
+### Landing Page
+![Landing Page](fig/01.png)
+The initial landing page with clean, modern design.
+
+### Card Information Entry
+![Card Information Entry](fig/02.png)
+Interactive form for entering card details with real-time validation.
+
+### Next Step
+![Next Step](fig/03.png)
+Transition screen after initial card information is entered.
+
+### CVV Entry
+![CVV Entry](fig/04.png)
+Secure CVV entry screen.
+
+### Loading Screen
+![Loading Screen](fig/05.png)
+Animated loading screen while "checking" card information.
+
+### Success Page
+![Success Page](fig/06.png)
+Final results page showing the check completion.
 
 ## Requirements
 - Node.js 18.17 or later
@@ -116,4 +148,4 @@ For detailed deployment instructions, check out the [Next.js deployment document
 - ESLint for code linting
 - Tailwind CSS for styling
 - Prisma for database management
-- i18next for **internationalization**
+- i18next for internationalization
