@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-export const maxDuration = 300;
+export const maxDuration = 60;
 
 // Type definition for the request body
 interface FormData {
